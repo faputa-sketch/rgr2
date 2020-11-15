@@ -1,0 +1,10 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  & > div {
+    padding: 2px;
+    height: 100%;
+  }
+}

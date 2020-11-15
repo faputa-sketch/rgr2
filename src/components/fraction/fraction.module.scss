@@ -1,0 +1,11 @@
+.wrapper {
+  line-height: 14px;
+
+  & hr {
+    border-color: gray;
+  }
+
+  div {
+    text-align: center;
+  }
+}

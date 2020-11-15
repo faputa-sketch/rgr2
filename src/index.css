@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'Arial Unicode MS'; /* Имя шрифта */
+  src: url(fonts/ARIALUNI.TTF); /* Путь к файлу со шрифтом */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 760px;
+  font-family: 'Arial Unicode MS', Arial, Helvetica;
+}
+
+h1,
+h2 {
+  text-align: center;
+}

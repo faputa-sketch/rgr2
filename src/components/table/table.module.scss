@@ -1,0 +1,12 @@
+.wrapper {
+  border-collapse: collapse;
+  margin-bottom: 5px;
+  margin-left: 5px;
+
+  & td,
+  & th {
+    border: 1px solid black;
+    padding: 2px;
+    min-width: 55px;
+  }
+}

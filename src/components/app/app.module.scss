@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+}
+
+.button {
+  width: 100px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.content {
+  padding: 10px;
+}
+
+.selectVariant {
+  padding: 10px;
+}
