@@ -1,11 +1,4 @@
 import React from 'react';
-import {
-  calcXiArr,
-  calcArrEqualizationFrequencies,
-  extractNiHatchArr,
-  calcArrX0Sqr,
-  extractX0Sqr,
-} from '../../helper';
 import u1formuleIcon from '../../img/u1formule-icon.png';
 import fiIcon from '../../img/fi-icon.png';
 import bigFormuleWithFiIcon from '../../img/bigformulewithfi-icon.png';
@@ -17,6 +10,7 @@ import graphImage21 from '../../img/graph.jpg';
 import graphImage22 from '../../img/graph1_22.jpg';
 import ArithMeanEstimate from '../arith-mean-estimate';
 import DispersionEstimate from '../dispersion-estimate';
+import { calcValues } from './calc-values';
 
 type InputType =
   | {
@@ -30,52 +24,52 @@ type InputType =
       xPirson: number;
       tValue: number;
     }
-  | undefined;
+  | undefined
+  | null;
 
 type Props = {
   input: InputType;
-  variant: number;
+  variantIndex: number;
 };
 
-const Part1 = ({ input, variant }: Props) => {
-  if (input === undefined) {
+const Part1 = ({ input, variantIndex }: Props) => {
+  if (input === undefined || input === null) {
+    return null;
+  }
+
+  const values = calcValues(variantIndex);
+
+  if (values === null) {
     return null;
   }
 
   let currentGraph = '';
 
-  if (variant === 21) {
+  if (variantIndex === 20) {
     currentGraph = graphImage21;
   }
 
-  if (variant === 22) {
+  if (variantIndex === 21) {
     currentGraph = graphImage22;
   }
 
-  const nValue = input.arrN.reduce((acc, el) => acc + el, 0);
-  const arrXi = calcXiArr(input.xi1, input.hValue, input.arrN.length);
-
-  const arrEqualizationFrequencies = calcArrEqualizationFrequencies(
-    input.specX,
+  const {
+    nValue,
     arrXi,
-    input.sko,
-    input.hValue,
-    nValue
-  );
-  const niHatchArr = extractNiHatchArr(arrEqualizationFrequencies);
-  const x0SqrArr = calcArrX0Sqr(input.arrN, niHatchArr);
-  const x0SqrValue = extractX0Sqr(x0SqrArr);
-
-  const numberOfFreedom = input.arrN.length - 3;
-  const generalDeviation = Math.round(((input.tValue * input.sko) / Math.sqrt(nValue)) * 10) / 10;
-  const confidenceLevel = Math.round((1 - input.significanceLevel) * 100) / 100;
-  const skoSqr = Math.pow(input.sko * 10, 2) / 100;
-  const generalDispersionDeviation =
-    Math.round(input.tValue * skoSqr * Math.sqrt(2 / nValue) * 100) / 100;
+    arrEqualizationFrequencies,
+    x0SqrArr,
+    x0SqrValue,
+    numberOfFreedom,
+    generalDeviation,
+    confidenceLevel,
+    skoSqr,
+    generalDispersionDeviation,
+    hypotAccept,
+  } = values;
 
   return (
     <div className={classes.wrapper}>
-      <h3>Часть I. Критерий Пирсона. Вариант {variant}</h3>
+      <h3>Часть I. Критерий Пирсона. Вариант {variantIndex + 1}</h3>
       <h3>{input.title}</h3>
       <h3>{`${Letters.specX} = ${input.specX}; ${Letters.sko} = ${input.sko}; h = ${input.hValue}`}</h3>
       <Table
@@ -137,7 +131,8 @@ const Part1 = ({ input, variant }: Props) => {
               значением {Letters.xSqr}.
             </li>
             <p>
-              {Letters.x0sqr} &lt; {Letters.xSqr} ({`${x0SqrValue} < ${input.xPirson}`})
+              {Letters.x0sqr} {hypotAccept ? <span>&lt;</span> : <span>&gt;</span>} {Letters.xSqr}(
+              {`${x0SqrValue} ${hypotAccept ? '<' : '>'} ${input.xPirson}`})
             </p>
           </ol>
         </li>
@@ -219,9 +214,11 @@ const Part1 = ({ input, variant }: Props) => {
         <li>Вывод</li>
         {/* изменяемое */}
         <p>
-          Выдвинутая гипотеза о нормальном распределении результатов принимается на уровне
-          значимости {Letters.significanceLevel} = {input.significanceLevel}, так как расчетное
-          значение критерия согласия {Letters.x0sqr} = {x0SqrValue} меньше критического значения{' '}
+          Выдвинутая гипотеза о нормальном распределении результатов{' '}
+          {hypotAccept ? 'принимается' : 'отвергается'} на уровне значимости{' '}
+          {Letters.significanceLevel} = {input.significanceLevel}, так как расчетное значение
+          критерия согласия {Letters.x0sqr} = {x0SqrValue} {hypotAccept ? 'меньше' : 'больше'}{' '}
+          критического значения
           {Letters.xSqr} = {input.xPirson}. Средний результат в {confidenceLevel * 100}% случаев
           находится в пределах от {(input.specX * 100 - generalDeviation * 100) / 100} и до{' '}
           {(input.specX * 100 + generalDeviation * 100) / 100}, а дисперсия с вероятностью{' '}
