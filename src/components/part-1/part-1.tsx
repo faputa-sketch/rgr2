@@ -6,8 +6,7 @@ import niHatchFormuleIcon from '../../img/nihatchformule-icon.png';
 import Table from '../table';
 import classes from './part-1.module.scss';
 import Letters from '../../letters';
-import graphImage21 from '../../img/graph.jpg';
-import graphImage22 from '../../img/graph1_22.jpg';
+import graphImage4 from '../../img/graph_4_rgr2.jpg';
 import ArithMeanEstimate from '../arith-mean-estimate';
 import DispersionEstimate from '../dispersion-estimate';
 import { calcValues } from './calc-values';
@@ -45,12 +44,8 @@ const Part1 = ({ input, variantIndex }: Props) => {
 
   let currentGraph = '';
 
-  if (variantIndex === 20) {
-    currentGraph = graphImage21;
-  }
-
-  if (variantIndex === 21) {
-    currentGraph = graphImage22;
+  if (variantIndex === 3) {
+    currentGraph = graphImage4;
   }
 
   const {
