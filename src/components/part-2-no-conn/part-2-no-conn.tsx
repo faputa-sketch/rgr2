@@ -15,24 +15,22 @@ import {
 import Formule from '../formule';
 import Fraction from '../fraction';
 
-type InputType =
-  | {
-      type: string;
-      title: string;
-      x1Arr: number[];
-      x2Arr: number[];
-      significanceLevel: number;
-      criticalTStudent: number;
-    }
-  | undefined;
+type InputType = {
+  type: string;
+  title: string;
+  x1Arr: number[];
+  x2Arr: number[];
+  significanceLevel: number;
+  criticalTStudent: number;
+} | null;
 
 type Props = {
   input: InputType;
-  variant: number;
+  variantIndex: number;
 };
 
-const Part2NoConn = ({ input, variant }: Props) => {
-  if (input === undefined) {
+const Part2NoConn = ({ input, variantIndex }: Props) => {
+  if (input === null) {
     return null;
   }
 
@@ -61,7 +59,7 @@ const Part2NoConn = ({ input, variant }: Props) => {
 
   return (
     <div className={classes.wrapper}>
-      <h3>Часть II. Критерий Стьюдента. Вариант {variant}</h3>
+      <h3>Часть II. Критерий Стьюдента. Вариант {variantIndex + 1}</h3>
       <h3>{input.title}</h3>
       <h3>{`Это ${input.type === 'no-connection' ? 'не' : ''}связанная выборка`}</h3>
       <Table
