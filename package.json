@@ -2,7 +2,7 @@
   "name": "project-md",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://faputa-sketch.github.io/rgr-3",
+  "homepage": "https://faputa-sketch.github.io/rgr2",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
